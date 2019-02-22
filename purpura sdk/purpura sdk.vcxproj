@@ -150,6 +150,7 @@
     <ClCompile Include="dll_main.cpp" />
     <ClCompile Include="hooks\hooks.cpp" />
     <ClCompile Include="interfaces\interfaces.cpp" />
+    <ClCompile Include="utilities\globals.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="hooks\hooks.h" />
@@ -162,6 +163,7 @@
     <ClInclude Include="sdk\i_surface.h" />
     <ClInclude Include="sdk\sdk.h" />
     <ClInclude Include="sdk\structs.h" />
+    <ClInclude Include="utilities\globals.h" />
     <ClInclude Include="utilities\utilities.h" />
     <ClInclude Include="utilities\vector.h" />
     <ClInclude Include="utilities\vmatrix.h" />

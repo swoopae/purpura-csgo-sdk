@@ -19,7 +19,7 @@ public:
 	vec_t& operator[](size_t i);
 };
 
-class QAngle : vec3_t {
+class q_angle : vec3_t {
 public:
 	vec_t pitch();
 	vec_t yaw();

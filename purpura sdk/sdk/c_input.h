@@ -1,19 +1,12 @@
 #pragma once
+
 #include "../utilities/vector.h"
 
 #include <cstring>
 
-#define MAX_SPLITSCREEN_CLIENT_BITS 2
-// this should == MAX_JOYSTICKS in InputEnums.h
-#define MAX_SPLITSCREEN_CLIENTS	( 1 << MAX_SPLITSCREEN_CLIENT_BITS ) // 4
+// Removed all the useless shit about joysticks and cleaned up code slightly
 
-#define JOYSTICK_BUTTON_INTERNAL( _joystick, _button ) ( JOYSTICK_FIRST_BUTTON + ((_joystick) * JOYSTICK_MAX_BUTTON_COUNT) + (_button) )
-#define JOYSTICK_POV_BUTTON_INTERNAL( _joystick, _button ) ( JOYSTICK_FIRST_POV_BUTTON + ((_joystick) * JOYSTICK_POV_BUTTON_COUNT) + (_button) )
-#define JOYSTICK_AXIS_BUTTON_INTERNAL( _joystick, _button ) ( JOYSTICK_FIRST_AXIS_BUTTON + ((_joystick) * JOYSTICK_AXIS_BUTTON_COUNT) + (_button) )
-
-#define JOYSTICK_BUTTON( _joystick, _button ) ( (ButtonCode_t)JOYSTICK_BUTTON_INTERNAL( _joystick, _button ) )
-#define JOYSTICK_POV_BUTTON( _joystick, _button ) ( (ButtonCode_t)JOYSTICK_POV_BUTTON_INTERNAL( _joystick, _button ) )
-#define JOYSTICK_AXIS_BUTTON( _joystick, _button ) ( (ButtonCode_t)JOYSTICK_AXIS_BUTTON_INTERNAL( _joystick, _button ) )
+// --------------------------------------- DEFINES
 
 #define IN_ATTACK        (1 << 0)
 #define IN_JUMP          (1 << 1)
@@ -41,6 +34,8 @@
 #define IN_GRENADE1      (1 << 23) // grenade 1
 #define IN_GRENADE2      (1 << 24) // grenade 2
 #define IN_ATTACK3       (1 << 25)
+
+// --------------------------------------- CLASSES
 
 class bf_read;
 class bf_write;
@@ -72,7 +67,7 @@ public:
 	char    pad_0x4C[0x18];     // 0x4C Current sizeof( usercmd ) =  100  = 0x64
 };
 
-class CVerifiedUserCmd
+class c_verified_usercmd
 {
 public:
 	c_usercmd  m_cmd;
@@ -82,12 +77,12 @@ class c_input
 {
 public:
 	void*               pvftable;                     //0x00
-	bool                m_fTrackIRAvailable;          //0x04
-	bool                m_fMouseInitialized;          //0x05
-	bool                m_fMouseActive;               //0x06
+	bool                m_f_track_ir_available;       //0x04
+	bool                m_f_mouse_initialized;        //0x05
+	bool                m_f_mouse_is_active;          //0x06
 	bool                m_fJoystickAdvancedInit;      //0x07
 	char                pad_0x08[0x2C];               //0x08
-	void*               m_pKeys;                      //0x34
+	void*               m_pkeys;                      //0x34
 	char                pad_0x38[0x6C];               //0x38
 	int					pad_0x41;
 	int					pad_0x42;
@@ -107,34 +102,12 @@ public:
 	int                 m_nClearInputState;           //0xE0
 	char                pad_0xE4[0x8];                //0xE4
 	c_usercmd*          m_pCommands;                  //0xEC
-	CVerifiedUserCmd*   m_pVerifiedCommands;          //0xF0
+	c_verified_usercmd* m_pVerifiedCommands;          //0xF0
 };
 
-enum
-{
-	MAX_JOYSTICKS = MAX_SPLITSCREEN_CLIENTS,
-	MOUSE_BUTTON_COUNT = 5,
-};
+// --------------------------------------- ENUMS
 
-enum JoystickAxis_t
-{
-	JOY_AXIS_X = 0,
-	JOY_AXIS_Y,
-	JOY_AXIS_Z,
-	JOY_AXIS_R,
-	JOY_AXIS_U,
-	JOY_AXIS_V,
-	MAX_JOYSTICK_AXES,
-};
-
-enum
-{
-	JOYSTICK_MAX_BUTTON_COUNT = 32,
-	JOYSTICK_POV_BUTTON_COUNT = 4,
-	JOYSTICK_AXIS_BUTTON_COUNT = MAX_JOYSTICK_AXES * 2,
-};
-
-enum ButtonCode_t : int
+enum button_code_t : int
 {
 	BUTTON_CODE_INVALID = -1,
 	BUTTON_CODE_NONE = 0,
@@ -264,54 +237,10 @@ enum ButtonCode_t : int
 	MOUSE_WHEEL_DOWN,	// A fake button which is 'pressed' and 'released' when the wheel is moved down
 
 	MOUSE_LAST = MOUSE_WHEEL_DOWN,
-	MOUSE_COUNT = MOUSE_LAST - MOUSE_FIRST + 1,
-
-	// Joystick
-	JOYSTICK_FIRST = MOUSE_LAST + 1,
-
-	JOYSTICK_FIRST_BUTTON = JOYSTICK_FIRST,
-	JOYSTICK_LAST_BUTTON = JOYSTICK_BUTTON_INTERNAL(MAX_JOYSTICKS - 1, JOYSTICK_MAX_BUTTON_COUNT - 1),
-	JOYSTICK_FIRST_POV_BUTTON,
-	JOYSTICK_LAST_POV_BUTTON = JOYSTICK_POV_BUTTON_INTERNAL(MAX_JOYSTICKS - 1, JOYSTICK_POV_BUTTON_COUNT - 1),
-	JOYSTICK_FIRST_AXIS_BUTTON,
-	JOYSTICK_LAST_AXIS_BUTTON = JOYSTICK_AXIS_BUTTON_INTERNAL(MAX_JOYSTICKS - 1, JOYSTICK_AXIS_BUTTON_COUNT - 1),
-
-	JOYSTICK_LAST = JOYSTICK_LAST_AXIS_BUTTON,
-
-	BUTTON_CODE_LAST,
-	BUTTON_CODE_COUNT = BUTTON_CODE_LAST - KEY_FIRST + 1,
-
-	// Helpers for XBox 360
-	KEY_XBUTTON_UP = JOYSTICK_FIRST_POV_BUTTON,	// POV buttons
-	KEY_XBUTTON_RIGHT,
-	KEY_XBUTTON_DOWN,
-	KEY_XBUTTON_LEFT,
-
-	KEY_XBUTTON_A = JOYSTICK_FIRST_BUTTON,		// Buttons
-	KEY_XBUTTON_B,
-	KEY_XBUTTON_X,
-	KEY_XBUTTON_Y,
-	KEY_XBUTTON_LEFT_SHOULDER,
-	KEY_XBUTTON_RIGHT_SHOULDER,
-	KEY_XBUTTON_BACK,
-	KEY_XBUTTON_START,
-	KEY_XBUTTON_STICK1,
-	KEY_XBUTTON_STICK2,
-	KEY_XBUTTON_INACTIVE_START,
-
-	KEY_XSTICK1_RIGHT = JOYSTICK_FIRST_AXIS_BUTTON,	// XAXIS POSITIVE
-	KEY_XSTICK1_LEFT,							// XAXIS NEGATIVE
-	KEY_XSTICK1_DOWN,							// YAXIS POSITIVE
-	KEY_XSTICK1_UP,								// YAXIS NEGATIVE
-	KEY_XBUTTON_LTRIGGER,						// ZAXIS POSITIVE
-	KEY_XBUTTON_RTRIGGER,						// ZAXIS NEGATIVE
-	KEY_XSTICK2_RIGHT,							// UAXIS POSITIVE
-	KEY_XSTICK2_LEFT,							// UAXIS NEGATIVE
-	KEY_XSTICK2_DOWN,							// VAXIS POSITIVE
-	KEY_XSTICK2_UP,								// VAXIS NEGATIVE
+	MOUSE_COUNT = MOUSE_LAST - MOUSE_FIRST + 1
 };
 
-enum MouseCodeState_t
+enum mouse_code_state_t
 {
 	BUTTON_RELEASED = 0,
 	BUTTON_PRESSED,

@@ -86,60 +86,19 @@ namespace global_utils {
 	template <typename T>
 	static T v_function(void* pClass, int iIndex) {
 
-		PDWORD pVTable = *(PDWORD*)pClass;
-		DWORD dwAddress = pVTable[iIndex];
+		PDWORD p_vtable = *(PDWORD*)pClass;
+		DWORD dw_address = p_vtable[iIndex];
 
-		return (T)(dwAddress);
+		return (T)(dw_address);
 
 	}
 
-	static bool w2s(const vec3_t &origin, vec2_t &screen)
-	{
-		// stolen from antario i think? i dont remember
-		const auto screenTransform = [&origin, &screen]() -> bool
-		{
-			static std::uintptr_t pViewMatrix;
-			if (!pViewMatrix)
-			{
-				pViewMatrix = static_cast<std::uintptr_t>(global_utils::get_signature("client_panorama.dll", "0F 10 05 ? ? ? ? 8D 85 ? ? ? ? B9"));
-				pViewMatrix += 3;
-				pViewMatrix = *reinterpret_cast<std::uintptr_t*>(pViewMatrix);
-				pViewMatrix += 176;
-			}
+	static void set_clantag(const char* tag, const char* name) {
 
-			const VMatrix& w2sMatrix = *reinterpret_cast<VMatrix*>(pViewMatrix);
-			screen.x = w2sMatrix.m[0][0] * origin.x + w2sMatrix.m[0][1] * origin.y + w2sMatrix.m[0][2] * origin.z + w2sMatrix.m[0][3];
-			screen.y = w2sMatrix.m[1][0] * origin.x + w2sMatrix.m[1][1] * origin.y + w2sMatrix.m[1][2] * origin.z + w2sMatrix.m[1][3];
+		static auto p_set_clantag = reinterpret_cast<void(__fastcall*)(const char*, const char*)>((DWORD)(global_utils::get_signature("engine.dll", "53 56 57 8B DA 8B F9 FF 15")));
+		p_set_clantag(tag, name);
 
-			float w = w2sMatrix.m[3][0] * origin.x + w2sMatrix.m[3][1] * origin.y + w2sMatrix.m[3][2] * origin.z + w2sMatrix.m[3][3];
-
-			if (w < 0.001f)
-			{
-				screen.x *= 100000;
-				screen.y *= 100000;
-				return true;
-			}
-
-			float invw = 1.f / w;
-			screen.x *= invw;
-			screen.y *= invw;
-
-			return false;
-		};
-
-		if (!screenTransform())
-		{
-			int s_width, s_height;
-			interfaces::engine_client->screen_size(s_width, s_height);
-
-			screen.x = (s_width * 0.5f) + (screen.x * s_width) * 0.5f;
-			screen.y = (s_height * 0.5f) - (screen.y * s_height) * 0.5f;
-
-			return true;
-		}
-		return false;
 	}
-
 	/// - High priority -
 	/// TODO: Write a netvar manager.
 }

@@ -1,3 +1,7 @@
+#pragma once
+
+// fix this
+
 typedef void * (*o_interface_t) (const char *pName, int *pReturnCode);
 
 class i_app_system {

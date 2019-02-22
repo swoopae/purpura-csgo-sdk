@@ -4,6 +4,7 @@
     <ClCompile Include="dll_main.cpp" />
     <ClCompile Include="interfaces\interfaces.cpp" />
     <ClCompile Include="hooks\hooks.cpp" />
+    <ClCompile Include="utilities\globals.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="utilities\utilities.h" />
@@ -20,5 +21,6 @@
     <ClInclude Include="sdk\i_client_mode.h" />
     <ClInclude Include="sdk\i_client_entity.h" />
     <ClInclude Include="sdk\c_input.h" />
+    <ClInclude Include="utilities\globals.h" />
   </ItemGroup>
 </Project>

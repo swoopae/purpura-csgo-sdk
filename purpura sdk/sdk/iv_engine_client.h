@@ -19,18 +19,6 @@ public:
 		return global_utils::v_function<o_fn>(this, 12)(this);
 
 	}
-	/*
-	*
-
-	VMatrix& w2s_matrix ( ) {
-
-		typedef VMatrix&(__thiscall *OrigFn)(void*);
-		return Aniware::Utilities::VirtualFunction <OrigFn>(this, 37)(this);
-
-	}
-
-	*
-	*/
 
 	float last_timestamp ( ) {
 
@@ -62,9 +50,7 @@ public:
 
 	bool game_and_connect ( ) {
 
-		if ( this->connected( ) && this->in_game( ) )
-			return true; //big brain
-		return false;
+		return (this->connected ( ) && this->in_game ( )); // here u go phil126
 
 	}
 

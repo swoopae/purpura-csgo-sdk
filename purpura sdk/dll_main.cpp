@@ -14,6 +14,7 @@ VOID WINAPI setup_debug_console ( ) {
 	freopen_s((FILE**)stdout, "CONOUT$", "w", stdout);
 	
 	SetConsoleTitleA( "[purpura sdk] console: " );
+
 }
 
 VOID WINAPI dll_setup ( HINSTANCE module_handle ) {
@@ -47,6 +48,7 @@ VOID WINAPI dll_setup ( HINSTANCE module_handle ) {
 			hooks::restore ( );
 			
 			FreeLibraryAndExitThread( module_handle, 1 );
+
 		}
 	}
 }
@@ -56,10 +58,12 @@ BOOL APIENTRY DllMain( HMODULE module, DWORD  reason_for_call, LPVOID reserved )
     switch ( reason_for_call ) {
 
     case DLL_PROCESS_ATTACH:
+
 		dll_setup ( module );
 		break;
 
     }
 
     return TRUE;
+
 }

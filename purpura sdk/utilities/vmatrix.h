@@ -215,7 +215,7 @@ public:
 	bool		IsIdentity() const;
 
 	// Setup a matrix for origin and angles.
-	void		SetupMatrixOrgAngles(const vec3_t &origin, const QAngle &vAngles);
+	void		SetupMatrixOrgAngles(const vec3_t &origin, const q_angle &vAngles);
 
 	// General inverse. This may fail so check the return!
 	bool		InverseGeneral(VMatrix &vInverse) const;

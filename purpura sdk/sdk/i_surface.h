@@ -38,15 +38,15 @@ public:
 
 	float r, g, b, a;
 
-	color(float R, float G, float B, float A) {
+	color(float red, float green, float blue, float alpha) {
 
-		r = R, g = G, b = B, a = A;
+		r = red, g = green, b = blue, a = alpha;
 
 	}
 
-	color(float R, float G, float B) {
+	color(float red, float green, float blue) {
 
-		r = R, g = G, b = B, a = 255.f;
+		r = red, g = green, b = blue, a = 255.f;
 
 	}
 };
