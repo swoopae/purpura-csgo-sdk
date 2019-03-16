@@ -54,17 +54,17 @@ public:
 
 	}
 
-	void client_cmd ( const char* szCmdString ) {
+	void client_cmd ( const char* sz_cmd_string ) {
 
 		typedef void(__thiscall *o_fn)(void*, const char *);
-		return global_utils::v_function<o_fn>(this, 108)(this, szCmdString);
+		return global_utils::v_function<o_fn>(this, 108)(this, sz_cmd_string);
 
 	}
 
-	void unrestricted_client_cmd ( const char* szCmdString ) {
+	void unrestricted_client_cmd ( const char* sz_cmd_string ) {
 
 		typedef void(__thiscall* o_fn)(void*, const char*, char);
-		return global_utils::v_function<o_fn>(this, 114)(this, szCmdString, 1);
+		return global_utils::v_function<o_fn>(this, 114)(this, sz_cmd_string, 1);
 
 	}
 

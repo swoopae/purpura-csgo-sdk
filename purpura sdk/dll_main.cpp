@@ -4,6 +4,7 @@
 
 #include "utilities/utilities.h"
 #include "interfaces/interfaces.h"
+#include "utilities/render_manager.h"
 #include "hooks/hooks.h"
 
 VOID WINAPI setup_debug_console ( ) {
@@ -17,23 +18,20 @@ VOID WINAPI setup_debug_console ( ) {
 
 }
 
-VOID WINAPI dll_setup ( HINSTANCE module_handle ) {
+DWORD WINAPI dll_setup ( HINSTANCE module_handle ) {
 
-	DisableThreadLibraryCalls ( module_handle );
 	setup_debug_console ( );
 
 	global_utils::console_log ( "purpura console loaded." );
 	
 	interfaces::init ( );
+	render_manager::init ( );
 	hooks::init ( );
 
 	while ( true ) {
 
 		using namespace std::literals::chrono_literals;
 		std::this_thread::sleep_for(1s);
-
-		/// - Low priority -
-		/// TODO: Make key customizable like properly, for now this will do though.
 
 		if ( GetAsyncKeyState ( VK_DELETE ) ) {
 
@@ -59,7 +57,8 @@ BOOL APIENTRY DllMain( HMODULE module, DWORD  reason_for_call, LPVOID reserved )
 
     case DLL_PROCESS_ATTACH:
 
-		dll_setup ( module );
+		DisableThreadLibraryCalls ( module );
+		CreateThread ( NULL, NULL, ( LPTHREAD_START_ROUTINE ) dll_setup, NULL, NULL, NULL );
 		break;
 
     }

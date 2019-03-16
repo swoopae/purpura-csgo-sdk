@@ -5,10 +5,11 @@
     <ClCompile Include="interfaces\interfaces.cpp" />
     <ClCompile Include="hooks\hooks.cpp" />
     <ClCompile Include="utilities\globals.cpp" />
+    <ClCompile Include="utilities\render_manager.cpp" />
+    <ClCompile Include="utilities\utilities.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="utilities\utilities.h" />
-    <ClInclude Include="sdk\i_app_system.h" />
     <ClInclude Include="sdk\i_surface.h" />
     <ClInclude Include="utilities\vector.h" />
     <ClInclude Include="utilities\vmt.h" />
@@ -22,5 +23,9 @@
     <ClInclude Include="sdk\i_client_entity.h" />
     <ClInclude Include="sdk\c_input.h" />
     <ClInclude Include="utilities\globals.h" />
+    <ClInclude Include="sdk\i_panel.h" />
+    <ClInclude Include="utilities\render_manager.h" />
+    <ClInclude Include="sdk\c_global_vars.h" />
+    <ClInclude Include="sdk\i_app_system.h" />
   </ItemGroup>
 </Project>

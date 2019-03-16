@@ -85,10 +85,10 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <WarningLevel>Level2</WarningLevel>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;PURPURASDK_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_DEBUG;PURPURASDK_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
@@ -113,12 +113,12 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <WarningLevel>Level2</WarningLevel>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <Optimization>Disabled</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;PURPURASDK_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;NDEBUG;PURPURASDK_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
@@ -151,19 +151,24 @@
     <ClCompile Include="hooks\hooks.cpp" />
     <ClCompile Include="interfaces\interfaces.cpp" />
     <ClCompile Include="utilities\globals.cpp" />
+    <ClCompile Include="utilities\render_manager.cpp" />
+    <ClCompile Include="utilities\utilities.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="hooks\hooks.h" />
     <ClInclude Include="interfaces\interfaces.h" />
+    <ClInclude Include="sdk\c_global_vars.h" />
     <ClInclude Include="sdk\c_input.h" />
     <ClInclude Include="sdk\iv_engine_client.h" />
     <ClInclude Include="sdk\i_app_system.h" />
     <ClInclude Include="sdk\i_client_entity.h" />
     <ClInclude Include="sdk\i_client_mode.h" />
+    <ClInclude Include="sdk\i_panel.h" />
     <ClInclude Include="sdk\i_surface.h" />
     <ClInclude Include="sdk\sdk.h" />
     <ClInclude Include="sdk\structs.h" />
     <ClInclude Include="utilities\globals.h" />
+    <ClInclude Include="utilities\render_manager.h" />
     <ClInclude Include="utilities\utilities.h" />
     <ClInclude Include="utilities\vector.h" />
     <ClInclude Include="utilities\vmatrix.h" />

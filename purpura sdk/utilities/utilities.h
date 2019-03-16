@@ -23,10 +23,11 @@ namespace global_utils {
 
 		typedef void * (*o_interface_t)(char*, int);
 		o_interface_t original = (o_interface_t)GetProcAddress(GetModuleHandleA(szModule), "CreateInterface");
-
 		return (T*)original(szInterface, 0);
 
 	}
+
+	void* find_interface(const char* module, const char* interface_name);
 
 	static uintptr_t get_signature(const char* szModule, const char* szSignature) 
 	{
@@ -65,6 +66,16 @@ namespace global_utils {
 
 	}
 
+	template <typename T>
+	static T v_function(void* pClass, int iIndex) {
+
+		PDWORD p_vtable = *(PDWORD*)pClass;
+		DWORD dw_address = p_vtable[iIndex];
+
+		return (T)(dw_address);
+
+	}
+
 	static void console_log(const std::string& szOutput) {
 
 		std::cout << "[log:] " << szOutput << "\n";
@@ -83,22 +94,15 @@ namespace global_utils {
 
 	}
 
-	template <typename T>
-	static T v_function(void* pClass, int iIndex) {
-
-		PDWORD p_vtable = *(PDWORD*)pClass;
-		DWORD dw_address = p_vtable[iIndex];
-
-		return (T)(dw_address);
-
-	}
-
 	static void set_clantag(const char* tag, const char* name) {
 
 		static auto p_set_clantag = reinterpret_cast<void(__fastcall*)(const char*, const char*)>((DWORD)(global_utils::get_signature("engine.dll", "53 56 57 8B DA 8B F9 FF 15")));
 		p_set_clantag(tag, name);
 
 	}
+
 	/// - High priority -
 	/// TODO: Write a netvar manager.
+
+	// hey. if you see this, sorry i didn't add the netvar manager yet. i already wrote it but i'm struggling with it at the moment. thanks for peeping my base! <3
 }
