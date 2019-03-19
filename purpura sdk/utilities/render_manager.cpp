@@ -35,6 +35,7 @@ void render_manager::filled_rect ( int x, int y, int w, int h, color color ) {
 
 }
 
+wchar_t* wide_buffer = new wchar_t [ 1024 ]; // thanks laxol from uc
 
 void render_manager::text ( const char* text, int x, int y, int font, color color ) {
 
@@ -47,7 +48,6 @@ void render_manager::text ( const char* text, int x, int y, int font, color colo
 
 	size_t size_nigga = strlen ( buffer ) + 1;
 
-	wchar_t* wide_buffer = new wchar_t [ size_nigga ];
 	mbstowcs_s ( 0, wide_buffer, size_nigga, buffer, size_nigga - 1 );
 
 	interfaces::surface->draw_set_text_color ( color.r, color.g, color.b, color.a );
